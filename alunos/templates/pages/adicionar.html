@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script defer src="{% static 'js/jquery.mask.js' %}"></script>
+    <script defer src="{% static 'js/jquery.mask.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+    <form class="form-input" method="POST" enctype="multipart/form-data" action=""> {% csrf_token %}
+        <input name="nome" type="text" placeholder="nome">
+        <input class="cpf" name="cpf" type="text" placeholder="cpf">
+        <input name="email" type="text" placeholder="email">
+        <input class="telefone" name="telefone" type="text" placeholder="telefone">
+        <input class="altura" name="altura" type="text" placeholder="altura">
+        <input name="descricao" type="text" placeholder="descrição">
+        <input name="data_nasc" type="date">
+        
+        <div class="add-image">
+               
+            <label for="select-img">
+                <img id="img" src="https://www.ferramentastenace.com.br/wp-content/uploads/2017/11/sem-foto.jpg" alt=""> 
+            </label>
+        </div>
+        <input id="select-img" name="imagem" type="file">
+        
+
+        <button type="submit">Adicionar</button>
+    </form>
+
+
+    <script>
+        let img = document.querySelector('#img')
+        let img_input = document.getElementById('select-img')
+
+        img_input.addEventListener('change', function(){
+            img.src = window.URL.createObjectURL(this.files[0])
+        })
+    </script>
+
+
+</body>
+</html>

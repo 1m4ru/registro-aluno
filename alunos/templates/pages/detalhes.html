@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <main>
+        <div class="card">
+            <div class="profile">
+                {% if contato.imagem %}
+                    <img src="{{ contato.imagem.url }}" alt="">
+                {% else %}
+                    <img src="https://www.ferramentastenace.com.br/wp-content/uploads/2017/11/sem-foto.jpg" alt="">
+                {% endif %}
+                </div>
+            <div class="info">
+                <p>{{contato.nome}}</p>
+                <p>{{contato.cpf}}</p>
+                <p>{{contato.email}}</p>
+                <p>{{contato.telefone}}</p>
+                <p>{{contato.altura}}</p>
+                <div class="description">
+                    <p>{{contato.descricao}}</p>
+                </div>
+                <p>{{contato.data_nascimento}}</p>
+            </div>
+            <div class="btn">
+                <a href="{% url 'deletar' contato.id %}">Apagar</a>
+                <a href="{% url 'editar' contato.id %}">Editar</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

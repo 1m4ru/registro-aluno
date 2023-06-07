@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #img{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data" action=""> {% csrf_token %}
+        <input name="nome" value="{{contato.nome}}" type="text" placeholder="nome">
+        <input name="cpf" value="{{contato.cpf}}" type="text" placeholder="cpf">
+        <input name="email" value="{{contato.email}}" type="text" placeholder="email">
+        <input name="telefone" value="{{contato.telefone}}" type="text" placeholder="telefone">
+        <input name="altura" value="{{contato.altura}}" type="text" placeholder="altura">
+        <input name="descricao" value="{{contato.descricao}}" type="text" placeholder="descrição">
+        <input name="data_nasc" value="{{contato.data_nascimento | date:'Y-m-d'}}" type="date">
+        {% if contato.imagem %}
+        <label for="img">Icone</label>
+        <input id="img" name="imagem" value="{{contato.imagem.url}}" type="file" accept="image/*">
+        {% else %}
+        <label for="img">Icone</label>
+        <input id="img" name="imagem" type="file" accept="image/*">
+        {% endif %}
+        <input name="check" type="checkbox" {% if contato.ativo == True %} checked {% endif %}>
+        <button type="submit">Adicionar</button>
+    </form>
+
+
+    
+    <img class="img_input" src="" alt="">
+
+    <script>
+        let img = document.querySelector('#img')
+        let img_input = document.querySelector('.img_input')
+
+        img.addEventListener('change', function(){
+            img_input.src = window.URL.createObjectURL(this.files[0])
+        })
+
+    </script>
+
+</body>
+</html>
