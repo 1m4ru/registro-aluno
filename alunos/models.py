@@ -11,6 +11,7 @@ class Alunos(models.Model):
     endereco = models.TextField()
     info = models.TextField()
     data_nascimento = models.DateField()
+    ativo = models.BooleanField()
 
     def __str__(self):
         return self.nome

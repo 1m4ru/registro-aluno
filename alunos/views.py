@@ -15,7 +15,7 @@ def search(request):
 def info(request, id):
     # contato = Contatos.objects.get(id=id)
     aluno = get_object_or_404(Alunos, id=id)
-    return render(request, 'pages/detalhes.html', {'aluno':aluno})
+    return render(request, 'pages/info.html', {'aluno':aluno})
 
 def deletar(request, id):
     aluno = Alunos.objects.get(id=id)
@@ -27,7 +27,7 @@ def adicionar(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         matricula = request.POST.get('matricula')
-        info = request.POST.get('outras_info')
+        info = request.POST.get('info')
         data = request.POST.get('data_nasc')
         telefone = request.POST.get('telefone')
         imagem = request.FILES.get('imagem')

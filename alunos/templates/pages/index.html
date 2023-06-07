@@ -46,7 +46,7 @@
             {% for aluno in alunos %}
             <tr>
                 <td>{{aluno.id}}</td>
-                <td><a href="{% url 'detalhes' aluno.id  %}">{{aluno.nome}}</a></td>
+                <td><a href="{% url 'info' aluno.id  %}">{{aluno.nome}}</a></td>
                 <td>{{aluno.matricula}}</td>
 
                 {% if aluno.ativo == True %}
