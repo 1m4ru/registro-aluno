@@ -12,6 +12,11 @@ def search(request):
     alunos = Alunos.objects.filter(nome__icontains=q)
     return render(request, 'pages/index.html', {'alunos':alunos})
 
+def info(request, id):
+    # contato = Contatos.objects.get(id=id)
+    aluno = get_object_or_404(Alunos, id=id)
+    return render(request, 'pages/detalhes.html', {'aluno':aluno})
+
 def deletar(request, id):
     aluno = Alunos.objects.get(id=id)
     aluno.delete()
@@ -22,12 +27,12 @@ def adicionar(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         matricula = request.POST.get('matricula')
-        outras_info = request.POST.get('outras_info')
+        info = request.POST.get('outras_info')
         data = request.POST.get('data_nasc')
         telefone = request.POST.get('telefone')
         imagem = request.FILES.get('imagem')
         print(imagem)
-        novo_aluno = Alunos(usuario_id=request.user.id,nome=nome,cpf=cpf, email=email, altura=altura, descricao=descricao, data_nascimento=data, telefone=telefone, imagem=imagem, ativo=True)
+        novo_aluno = Alunos(usuario_id=request.user.id,nome=nome, info=info, data_nascimento=data, telefone=telefone, matricula=matricula, imagem=imagem, ativo=True)
         novo_aluno.save()
         return redirect('home')
     else:
@@ -39,11 +44,12 @@ def editar(request, id):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         matricula = request.POST.get('matricula')
-        outras_info = request.POST.get('outras_info')
+        info = request.POST.get('info')
         data = request.POST.get('data_nasc')
         telefone = request.POST.get('telefone')
         imagem = request.FILES.get('imagem')
-        
+        check = request.POST.get('check')
+
         if check == None:
             check = False
         else:
@@ -51,11 +57,14 @@ def editar(request, id):
         imagem = request.FILES.get('imagem')
         print(imagem)
         aluno.nome = nome
+        aluno.matricula = matricula
         aluno.telefone = telefone
         aluno.data = data
         if imagem != None:
             aluno.imagem = imagem
-        aluno.descricao = descricao
+        aluno.info = info
+        aluno.ativo = check
+
         aluno.save()
         return redirect('home')
     else:    

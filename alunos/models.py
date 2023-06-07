@@ -9,7 +9,7 @@ class Alunos(models.Model):
     imagem = models.ImageField()
     telefone = models.CharField(max_length=20)
     endereco = models.TextField()
-    outras_info = models.TextField()
+    info = models.TextField()
     data_nascimento = models.DateField()
 
     def __str__(self):
