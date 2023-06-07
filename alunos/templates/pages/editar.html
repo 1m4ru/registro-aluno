@@ -14,21 +14,19 @@
 </head>
 <body>
     <form method="POST" enctype="multipart/form-data" action=""> {% csrf_token %}
-        <input name="nome" value="{{contato.nome}}" type="text" placeholder="nome">
-        <input name="cpf" value="{{contato.cpf}}" type="text" placeholder="cpf">
-        <input name="email" value="{{contato.email}}" type="text" placeholder="email">
-        <input name="telefone" value="{{contato.telefone}}" type="text" placeholder="telefone">
-        <input name="altura" value="{{contato.altura}}" type="text" placeholder="altura">
-        <input name="descricao" value="{{contato.descricao}}" type="text" placeholder="descrição">
-        <input name="data_nasc" value="{{contato.data_nascimento | date:'Y-m-d'}}" type="date">
-        {% if contato.imagem %}
+        <input name="nome" value="{{aluno.nome}}" type="text" placeholder="nome">
+        <input name="matricula" value="{{aluno.matricula}}" type="text" placeholder="matricula">
+        <input name="telefone" value="{{aluno.telefone}}" type="text" placeholder="telefone">
+        <input name="info" value="{{aluno.descricao}}" type="text" placeholder="info">
+        <input name="data_nasc" value="{{aluno.data_nascimento | date:'Y-m-d'}}" type="date">
+        {% if aluno.imagem %}
         <label for="img">Icone</label>
-        <input id="img" name="imagem" value="{{contato.imagem.url}}" type="file" accept="image/*">
+        <input id="img" name="imagem" value="{{aluno.imagem.url}}" type="file" accept="image/*">
         {% else %}
         <label for="img">Icone</label>
         <input id="img" name="imagem" type="file" accept="image/*">
         {% endif %}
-        <input name="check" type="checkbox" {% if contato.ativo == True %} checked {% endif %}>
+        <input name="check" type="checkbox" {% if aluno.ativo == True %} checked {% endif %}>
         <button type="submit">Adicionar</button>
     </form>
 

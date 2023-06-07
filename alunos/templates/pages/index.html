@@ -12,7 +12,7 @@
 <body>
     
     <div class="navbar">
-        <label for="">Agenda</label>
+        <label for="">Resgistro de Alunos</label>
 
         <div class="user">
             <p>Nome do usuario</p>
@@ -22,11 +22,11 @@
 
     <form action="{% url 'busca' %}">
         <div class="form-inputs">
-            <input type="text" name="search" placeholder="Buscar contato...">
+            <input type="text" name="search" placeholder="Buscar aluno...">
             <button type="submit">Buscar</button>
         </div>
         <div class="add-btn">
-            <a href="{% url 'adicionar' %}">+ Adicionar contato</a>
+            <a href="{% url 'adicionar' %}">+ Adicionar aluno</a>
             <div class="btn-filter">
                 <a href="{% url 'adicionar' %}">Ativos</a>
                 <a href="{% url 'adicionar' %}">Inativos</a>
@@ -38,20 +38,18 @@
             <tr>
                 <th>Id</th>
                 <th>Nome</th>
-                <th>Email</th>
-                <th>CPF</th>
+                <th>Matricula</th>
                 <th>Ativo</th>
             </tr>
         </thead>
         <tbody>
-            {% for contato in contatos %}
+            {% for aluno in alunos %}
             <tr>
-                <td>{{contato.id}}</td>
-                <td><a href="{% url 'detalhes' contato.id  %}">{{contato.nome}}</a></td>
-                <td>{{contato.email}}</td>
-                <td>{{contato.cpf}}</td>
+                <td>{{aluno.id}}</td>
+                <td><a href="{% url 'detalhes' aluno.id  %}">{{aluno.nome}}</a></td>
+                <td>{{aluno.matricula}}</td>
 
-                {% if contato.ativo == True %}
+                {% if aluno.ativo == True %}
                 <td><i class="fa fa-check"></i></td>
                 {% else %}
                 <td><i class="fa fa-xmark"></i></td>
@@ -66,10 +64,7 @@
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
-    </div>
-
-
-    
+    </div>    
 
 </body>
 </html>
