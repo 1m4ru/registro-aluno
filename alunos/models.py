@@ -6,7 +6,7 @@ class Aluno(models.Model):
     data_nascimento = models.DateField()
     endereco = models.CharField(max_length=200)
     contato_emergencia = models.CharField(max_length=100)    
-    foto = models.ImageField(upload_to='alunos/fotos', null=True, blank=True)
+    foto = models.ImageField(upload_to='alunos/media', null=True, blank=True)
 
     def __str__(self):
         return self.nome

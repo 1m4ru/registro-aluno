@@ -3,6 +3,7 @@ from . import views
 from .views import consultar_frequencia
 
 urlpatterns = [
+    path('', views.index, name='index'),
     path('alunos/', views.index, name='index'),
     path('alunos/<int:aluno_id>/', views.info, name='info'),
     path('alunos/<int:aluno_id>/editar/', views.editar, name='editar'),

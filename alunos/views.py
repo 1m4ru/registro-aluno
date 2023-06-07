@@ -5,15 +5,15 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 
-@login_required
+@login_required(redirect_field_name='login')
+def index(request):
+    alunos = Aluno.objects.all()
+    return render(request, 'pages/base.html', {'alunos': alunos})
+
 def info(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     context = {'aluno': aluno}
-    return render(request, 'templates/pages/info.html', context)
-
-def index(request):
-    alunos = Aluno.objects.all()
-    return render(request, 'index.html', {'alunos': alunos})
+    return render(request, 'pages/index.html', context)
 
 def adicionar(request):
     if request.method == 'POST':
