@@ -1,0 +1,10 @@
+<h2>Média de {{ aluno.nome }}</h2>
+<ul>
+  {% for nota in notas %}
+    <li>{{ nota.disciplina.nome }}: {{ nota.valor }}</li>
+  {% empty %}
+    <li>Nenhuma nota registrada.</li>
+  {% endfor %}
+</ul>
+<p>Média final: {{ media }}</p>
+<a href="{% url 'ver_notas' aluno.id %}">Ver notas</a>

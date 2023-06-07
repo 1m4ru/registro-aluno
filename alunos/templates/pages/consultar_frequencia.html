@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Consultar Frequência</title>
+</head>
+<body>
+    <h1>Consultar Frequência</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Data</th>
+                <th>Presente</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for frequencia in frequencias %}
+            <tr>
+                <td>{{ frequencia.aluno }}</td>
+                <td>{{ frequencia.data }}</td>
+                <td>{{ frequencia.presente }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Notas</title>
+</head>
+<body>
+    <h1>Registro de Notas</h1>
+    <form action="{% url 'registrar_notas' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="aluno" placeholder="Nome do Aluno">
+        <input type="text" name="disciplina" placeholder="Nome da Disciplina">
+        <input type="number" name="nota" placeholder="Nota">
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+</html>

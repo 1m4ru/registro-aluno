@@ -1,0 +1,8 @@
+<form method="POST" action="{% url 'editar_informacoes' aluno.id %}">
+    {% csrf_token %}
+    <input type="text" name="nome" value="{{ aluno.nome }}" placeholder="Nome completo" required>
+    <input type="text" name="endereco" value="{{ aluno.endereco }}" placeholder="Endereço" required>
+    <input type="text" name="contato_emergencia" value="{{ aluno.contato_emergencia }}" placeholder="Contato de Emergência" required>
+    <!-- Adicione outros campos de acordo com suas necessidades -->
+    <button type="submit">Salvar</button>
+</form>

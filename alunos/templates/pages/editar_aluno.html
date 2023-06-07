@@ -1,0 +1,24 @@
+<h2>Editar Aluno</h2>
+<form method="POST">
+    {% csrf_token %}
+    <label for="nome">Nome:</label>
+    <input type="text" id="nome" name="nome" value="{{ aluno.nome }}"><br>
+
+    <label for="data_nascimento">Data de Nascimento:</label>
+    <input type="date" id="data_nascimento" name="data_nascimento" value="{{ aluno.data_nascimento }}"><br>
+
+    <label for="endereco">Endereço:</label>
+    <input type="text" id="endereco" name="endereco" value="{{ aluno.endereco }}"><br>
+
+    <label for="contato_emergencia">Contato de Emergência:</label>
+    <input type="text" id="contato_emergencia" name="contato_emergencia" value="{{ aluno.contato_emergencia }}"><br>
+
+    <!-- Adicione outros campos de acordo com suas necessidades -->
+
+    <button type="submit">Salvar</button>
+</form>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar</button>
+  </form>

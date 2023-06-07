@@ -1,70 +1,26 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-<body>
-    
-    <div class="navbar">
-        <label for="">Resgistro de Alunos</label>
+<!-- index.html -->
 
-        <div class="user">
-            <p>Nome do usuario</p>
-            <a href="{% url 'logout' %}">Sair</a>
-        </div>
-    </div>
+{% extends 'base.html' %}
 
-    <form action="{% url 'busca' %}">
-        <div class="form-inputs">
-            <input type="text" name="search" placeholder="Buscar aluno...">
-            <button type="submit">Buscar</button>
-        </div>
-        <div class="add-btn">
-            <a href="{% url 'adicionar' %}">+ Adicionar aluno</a>
-            <div class="btn-filter">
-                <a href="{% url 'adicionar' %}">Ativos</a>
-                <a href="{% url 'adicionar' %}">Inativos</a>
-            </div>
-        </div>
-    </form>
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nome</th>
-                <th>Matricula</th>
-                <th>Ativo</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for aluno in alunos %}
-            <tr>
-                <td>{{aluno.id}}</td>
-                <td><a href="{% url 'info' aluno.id  %}">{{aluno.nome}}</a></td>
-                <td>{{aluno.matricula}}</td>
+{% block content %}
+  <h1>Lista de Alunos</h1>
 
-                {% if aluno.ativo == True %}
-                <td><i class="fa fa-check"></i></td>
-                {% else %}
-                <td><i class="fa fa-xmark"></i></td>
-                {% endif %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    <div class="pagination">
-        <a href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
-    </div>    
-
-</body>
-</html>
+  <table>
+    <thead>
+      <tr>
+        <th>Matrícula</th>
+        <th>Nome</th>
+        <th>E-mail</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for aluno in alunos %}
+      <tr>
+        <td>{{ aluno.matricula }}</td>
+        <td>{{ aluno.nome }}</td>
+        <td>{{ aluno.email }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

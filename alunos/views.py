@@ -1,71 +1,160 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from . models import Alunos
+from .models import Aluno, Nota, Documento, Frequencia, RegistroAlteracao
+from .forms import AlunoForm, NotaForm
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
-@login_required(redirect_field_name='login')
+@login_required
+def info(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    context = {'aluno': aluno}
+    return render(request, 'templates/pages/info.html', context)
+
 def index(request):
-    alunos = Alunos.objects.filter(usuario_id=request.user.id).order_by('-id')
-    return render(request, 'pages/index.html', {'alunos':alunos})
-
-def search(request):
-    q = request.GET.get('search')
-    alunos = Alunos.objects.filter(nome__icontains=q)
-    return render(request, 'pages/index.html', {'alunos':alunos})
-
-def info(request, id):
-    # contato = Contatos.objects.get(id=id)
-    aluno = get_object_or_404(Alunos, id=id)
-    return render(request, 'pages/info.html', {'aluno':aluno})
-
-def deletar(request, id):
-    aluno = Alunos.objects.get(id=id)
-    aluno.delete()
-    return redirect('home')
+    alunos = Aluno.objects.all()
+    return render(request, 'index.html', {'alunos': alunos})
 
 def adicionar(request):
-
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        matricula = request.POST.get('matricula')
-        info = request.POST.get('info')
-        data = request.POST.get('data_nasc')
-        telefone = request.POST.get('telefone')
-        imagem = request.FILES.get('imagem')
-        print(imagem)
-        novo_aluno = Alunos(usuario_id=request.user.id,nome=nome, info=info, data_nascimento=data, telefone=telefone, matricula=matricula, imagem=imagem, ativo=True)
-        novo_aluno.save()
-        return redirect('home')
+        form = AlunoForm(request.POST, request.FILES)
+        if form.is_valid():
+            aluno = form.save(commit=False)
+            aluno.matricula = gerar_matricula()  # Geração automática da matrícula
+            aluno.save()
+            return redirect('home')
     else:
-        return render(request, 'pages/adicionar.html')
+        form = AlunoForm()
+    
+    return render(request, 'cadastro_aluno.html', {'form': form})
 
+def gerar_matricula():
+    # Recupera o último aluno cadastrado
+    ultimo_aluno = Aluno.objects.order_by('-id').first()
 
-def editar(request, id):
-    aluno = Alunos.objects.get(id=id)
+    if ultimo_aluno:
+        # Se existir um aluno cadastrado, gera uma nova matrícula sequencial
+        nova_matricula = ultimo_aluno.matricula + 1
+    else:
+        # Se não existir nenhum aluno cadastrado, define a matrícula inicial como 1
+        nova_matricula = 1
+
+    return nova_matricula
+
+def detalhes_aluno(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    return render(request, 'detalhes_aluno.html', {'aluno': aluno})
+
+def editar(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+
     if request.method == 'POST':
-        nome = request.POST.get('nome')
-        matricula = request.POST.get('matricula')
-        info = request.POST.get('info')
-        data = request.POST.get('data_nasc')
-        telefone = request.POST.get('telefone')
-        imagem = request.FILES.get('imagem')
-        check = request.POST.get('check')
-
-        if check == None:
-            check = False
-        else:
-            check = True    
-        imagem = request.FILES.get('imagem')
-        print(imagem)
-        aluno.nome = nome
-        aluno.matricula = matricula
-        aluno.telefone = telefone
-        aluno.data = data
-        if imagem != None:
-            aluno.imagem = imagem
-        aluno.info = info
-        aluno.ativo = check
+        aluno.nome = request.POST.get('nome')
+        aluno.data_nascimento = request.POST.get('data_nascimento')
+        aluno.endereco = request.POST.get('endereco')
+        aluno.contato_emergencia = request.POST.get('contato_emergencia')
+        # Adicione outros campos de acordo com suas necessidades
 
         aluno.save()
-        return redirect('home')
-    else:    
-        return render(request, 'pages/editar.html', {'aluno':aluno})
+        return redirect('detalhes_aluno', aluno_id=aluno.id)
+
+    return render(request, 'editar_aluno.html', {'aluno': aluno})
+
+def deletar(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+
+    if request.method == 'POST':
+        aluno.delete()
+        return redirect('index')  # Redireciona para a página inicial após a exclusão
+
+    return render(request, 'confirmar_exclusao.html', {'aluno': aluno})
+
+def registrar_nota(request):
+    if request.method == 'POST':
+        form = NotaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = NotaForm()
+    return render(request, 'registrar_nota.html', {'form': form})
+
+def ver_notas(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    notas = Nota.objects.filter(aluno=aluno)
+    return render(request, 'ver_notas.html', {'aluno': aluno, 'notas': notas})
+
+
+def calcular_media(notas):
+    total_notas = len(notas)
+    soma_notas = sum(nota.valor for nota in notas)
+    if total_notas > 0:
+        return soma_notas / total_notas
+    return 0
+
+def ver_media(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    notas = Nota.objects.filter(aluno=aluno)
+    total_notas = notas.count()
+    media = sum(nota.valor for nota in notas) / total_notas if total_notas > 0 else 0
+    return render(request, 'ver_media.html', {'aluno': aluno, 'media': media})
+
+def consultar_informacoes(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    notas = Nota.objects.filter(aluno=aluno)
+    frequencias = Frequencia.objects.filter(aluno=aluno)
+    
+    # Outras consultas de informações podem ser adicionadas aqui
+    
+    return render(request, 'consultar_informacoes.html', {'aluno': aluno, 'notas': notas, 'frequencias': frequencias})
+
+def editar_informacoes(request, aluno_id):
+    
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    if request.method == 'POST':
+        # Processar os dados enviados pelo formulário
+        nome = request.POST.get('nome')
+        matricula = request.POST.get('matricula')
+        # Atualizar as informações pessoais do aluno
+        aluno.nome = nome
+        aluno.matricula = matricula
+        # Salvar as alterações no aluno
+        aluno.save()
+
+        # Registrar a alteração no histórico
+        registro = RegistroAlteracao(aluno=aluno, campo_alterado='informacoes_pessoais', valor_anterior='Valores anteriores')
+        registro.save()
+
+        return redirect('detalhes_aluno', aluno_id=aluno.id)
+    else:
+        # Exibir o formulário preenchido com as informações atuais
+        return render(request, 'editar.html', {'aluno': aluno})
+
+
+def adicionar_documento(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+
+    if request.method == 'POST':
+        titulo = request.POST.get('titulo')
+        arquivo = request.FILES.get('arquivo')
+
+        documento = Documento(aluno=aluno, titulo=titulo, arquivo=arquivo)
+        documento.save()
+
+        return redirect('detalhes_aluno', aluno_id=aluno.id)
+    else:
+        return render(request, 'adicionar_documento.html', {'aluno': aluno})
+
+def consultar_frequencia(request):
+    frequencias = Frequencia.objects.all()
+    return render(request, 'consultar_frequencia.html', {'frequencias': frequencias})
+
+def media_turma(request):
+    # Calcula a média da turma
+    media = Aluno.objects.all().aggregate(media_geral=Avg('nota'))
+    return render(request, 'relatorios/media_turma.html', {'media': media})
+
+def indice_presenca(request):
+    # Calcula o índice de presença da turma
+    indice = Aluno.objects.all().aggregate(indice_presenca=Avg('presenca'))
+    return render(request, 'relatorios/indice_presenca.html', {'indice': indice})

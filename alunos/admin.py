@@ -1,9 +1,24 @@
+# forms.py
 from django.contrib import admin
-from .models import Alunos
+from .models import Aluno, Disciplina, Nota, Frequencia
 
-class AdminAlunos(admin.ModelAdmin):
-    list_display = ['id', 'nome', 'matricula', 'ativo']
+@admin.register(Aluno)
+class AlunoAdmin(admin.ModelAdmin):
+    list_display = ('matricula', 'nome', 'data_nascimento', 'endereco', 'contato_emergencia')
+    list_filter = ['data_nascimento']
+    search_fields = ['nome', 'matricula']
+
+@admin.register(Disciplina)
+class DisciplinaAdmin(admin.ModelAdmin):
+    list_display = ['nome']
     search_fields = ['nome']
-    list_filter = ['ativo']
-    list_display_links = ['nome']
-admin.site.register(Alunos, AdminAlunos)
+
+@admin.register(Nota)
+class NotaAdmin(admin.ModelAdmin):
+    list_display = ('aluno', 'disciplina', 'valor')
+
+
+@admin.register(Frequencia)
+class FrequenciaAdmin(admin.ModelAdmin):
+    list_display = ('aluno', 'disciplina', 'data', 'presente')
+    list_filter = ('disciplina',) 

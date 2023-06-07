@@ -1,0 +1,17 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Frequência</title>
+</head>
+<body>
+    <h1>Registro de Frequência</h1>
+    <form action="{% url 'registrar_frequencia' %}" method="POST">
+        {% csrf_token %}
+        <input type="text" name="aluno" placeholder="Nome do Aluno">
+        <input type="text" name="disciplina" placeholder="Nome da Disciplina">
+        <input type="text" name="presenca" placeholder="Presença (S/N)">
+        <button type="submit">Registrar</button>
+    </form>
+</body>
+</html>
