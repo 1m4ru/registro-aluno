@@ -156,5 +156,5 @@ def media_turma(request):
 
 def indice_presenca(request):
     # Calcula o índice de presença da turma
-    indice = Aluno.objects.all().aggregate(indice_presenca=Avg('presenca'))
+    #indice = Aluno.objects.all().aggregate(indice_presenca=Avg('presenca'))
     return render(request, 'relatorios/indice_presenca.html', {'indice': indice})
