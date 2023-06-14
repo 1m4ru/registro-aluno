@@ -19,7 +19,7 @@ class DisciplinaAdmin(admin.ModelAdmin):
 
 @admin.register(Nota)
 class NotaAdmin(admin.ModelAdmin):
-    list_display = ('aluno', 'disciplina', 'valor')
+    list_display = ('aluno', 'disciplina', 'nota_01', 'nota_02', 'nota_03')
 
 
 @admin.register(Frequencia)

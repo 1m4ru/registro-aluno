@@ -48,10 +48,12 @@ class DisciplinaRelacionada(models.Model):
 class Nota(models.Model):
     aluno = models.ForeignKey('Aluno', on_delete=models.CASCADE)
     disciplina = models.ForeignKey('Disciplina', on_delete=models.CASCADE)
-    valor = models.DecimalField(max_digits=5, decimal_places=2)
+    nota_01 = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    nota_02 = models.DecimalField(max_digits=5, decimal_places=2, null=True)
+    nota_03 = models.DecimalField(max_digits=5, decimal_places=2, null=True)
 
     def __str__(self):
-        return f"{self.aluno.nome} - {self.disciplina.nome}: {self.valor}"
+        return f"{self.aluno.nome} - {self.disciplina.nome}: {self.nota_01}: {self.nota_02}: {self.nota_03}"
 
 
 class Documento(models.Model):
