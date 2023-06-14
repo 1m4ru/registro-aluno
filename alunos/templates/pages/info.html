@@ -1,17 +1,43 @@
-<!-- info.html -->
-
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/templates/static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Informações do Aluno</h1>
-
-  <h2>Matrícula: {{ aluno.matricula }}</h2>
-  <p>Nome: {{ aluno.nome }}</p>
-  <p>E-mail: {{ aluno.email }}</p>
-  <p>Contato de Emergência: {{ aluno.contato_emergencia }}</p>
-  <p>Nota: {{ aluno.nota }}</p>
-  <p>Presença: {{ aluno.presenca }}</p>
-  
-  <a href="{% url 'editar' aluno.id %}">Editar</a>
-  <a href="{% url 'excluir' aluno.id %}">Excluir</a>
+  <div class="informacoesAlunos">
+    <div class="titleAlunos">
+      <h1>Informações do Aluno</h1>
+    </div>
+    <div class="contentAlunos">
+      <h2>Matrícula: {{ aluno.matricula }}</h2>
+      <p>Nome: {{ aluno.nome }}</p>
+      <p>E-mail: {{ aluno.email }}</p>
+      <p>Contato de Emergência: {{ aluno.contato_emergencia }}</p>
+      <p>Nota: {{ aluno.nota }}</p>
+      <p>Presença: {{ aluno.presenca }}</p>
+      
+      
+        <a href="{% url 'editar' aluno.id %}">
+          <button>Editar</button>
+        </a>
+        <a href="{% url 'excluir' aluno.id %}">
+          <button>Excluir</button>
+        </a>
+      
+    
+    </div>
+  </div>
 {% endblock %}
+ 
+
+</body>
+</html>
+
