@@ -1,10 +1,49 @@
-<!-- index.html -->
-
-{% extends 'base.html' %}
-
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="/templates/static/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+ <div class="contentIndex">
+  
+ </div>
+  <div class="sidebar">
+    <div class="imgProfile">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80" alt="">
+    </div>
+   <div class="informationsTeacher">
+    <strong>Pedro dos santos</strong> 
+    <p>pedro@professor.com.br</p>
+   </div>
+    <div class="linksPrincipais">
+      <a href="">Frequencia</a>
+      <a href="">Alunos</a>
+      <a href="">Notas</a>
+      <a href="">Disciplina</a>
+    </div>
+  </div>
+  <!-- {% extends 'base.html' %} -->
+<!-- {% block content %} -->
+<div class="navbar">
   <h1>Lista de Alunos</h1>
+</div>
+<div class="container">
+  <div class="pesquisar">
+   <div class="inputPesquisar">
+    <input type="text" placeholder="Pesquise por id ou nome">
+   </div> 
 
+  <div class="buttons">
+    <button>Pesquisar</button>
+    <a href="" class="buttons">Adicionar</a>
+    <a href="" class="buttons">Editar</a>
+  </div>
+</div>
   <table>
     <thead>
       <tr>
@@ -14,13 +53,18 @@
       </tr>
     </thead>
     <tbody>
-      {% for aluno in alunos %}
+      <!-- {% for aluno in alunos %} -->
       <tr>
         <td>{{ aluno.matricula }}</td>
         <td>{{ aluno.nome }}</td>
         <td>{{ aluno.email }}</td>
       </tr>
-      {% endfor %}
+      <!-- {% endfor %} -->
     </tbody>
   </table>
-{% endblock %}
+  <!-- {% endblock %} -->
+</div>
+
+</body>
+</html>
+
