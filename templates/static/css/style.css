@@ -312,6 +312,9 @@ table td {
 
 }
 
+.CadastrarUser{
+    margin-left: -90%;
+}
 .navbar{
     /* padding: 12px 30px; */
     width: 100%;
@@ -386,6 +389,12 @@ form{
     background-color: green !important;
     padding: 80px 30px !important;
     color: white;
+    display: flex;
+    align-items: center;
+}
+
+.loginUser{
+   margin-left: -100%;
 }
 
 
