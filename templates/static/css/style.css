@@ -476,9 +476,98 @@ form{
     padding: 0 6px;
 }
 
+.adicionarDocumento{
+    background-color: green;
+    width: 100%;
+    height: 300px;
+    margin-left: 45%;
+    display: flex;
+    flex-direction: column;
+}
+
+.titleDoc{
+    background-color: green;
+    color: white;
+}
+
+.titleDoc h1{
+    background-color: green;
+}
+
+.addDoc{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+}
+
+.addDoc form{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.addDoc button{
+    width: 100px;
+    background-color: #006400;
+    border-radius: 8px;
+}
+
+.registroPresenca{
+    background-color: green;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 50%;
+    margin-top: 20%;
+}
+
+.registroPresenca h1{
+    background-color: green;
+    color: white;
+}
+
 .btn > a:nth-child(2){
     background-color: rgb(127, 209, 19);
 }
+
+.registroPresenca form{
+    background-color: green;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+}
+
+.registroPresenca input{
+    width: 300px;
+    border-radius: 8px;
+}
+
+.registroPresenca button{
+    width: 200px;
+    height: 30px;
+    background-color: #006400;
+    border: none;
+    border-radius: 8px;
+}
+
+.mediaTurma{
+    background-color: green;
+    width: 100%;
+    height: 200px;
+    color: white;
+    margin-left: 50%;
+
+}
+
+.mediaTurma h1{
+    background-color: green;
+}
+
+
 
 
 .add-btn{
