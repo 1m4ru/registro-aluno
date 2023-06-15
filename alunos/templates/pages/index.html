@@ -23,9 +23,9 @@
     <p>pedro@professor.com.br</p>
    </div>
     <div class="linksPrincipais">
-      <a href="">Frequencia</a>
+      <a href="{% url 'consultar_frequencia' %}">Frequencia</a>
       <a href="">Alunos</a>
-      <a href="">Notas</a>
+      <a href="{% url 'ver_notas' %}">Notas</a>
       <a href="">Disciplina</a>
     </div>
   </div>
@@ -57,7 +57,7 @@
       <!-- {% for aluno in alunos %} -->
       <tr>
         <td>{{ aluno.matricula }}</td>
-        <td>{{ aluno.nome }}</td>
+        <td><a href="{% url 'detalhes_aluno' aluno.id  %}">{{aluno.nome}}</a></td>
         <td>{{ aluno.email }}</td>
       </tr>
       <!-- {% endfor %} -->

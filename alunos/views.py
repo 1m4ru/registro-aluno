@@ -46,7 +46,7 @@ def detalhes_aluno(request, aluno_id):
     return render(request, 'pages/detalhes_aluno.html', {'aluno': aluno})
 
 def editar(request, aluno_id):
-    aluno = get_object_or_404(Aluno, id=aluno_id)
+    aluno = Aluno.objects.get(id=aluno_id)
 
     if request.method == 'POST':
         aluno.nome = request.POST.get('nome')
@@ -58,7 +58,8 @@ def editar(request, aluno_id):
         aluno.save()
         return redirect('detalhes_aluno', aluno_id=aluno.id)
 
-    return render(request, 'editar_aluno.html', {'aluno': aluno})
+    return render(request, 'pages/editar_aluno.html', {'aluno': aluno})
+
 
 def deletar(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
@@ -82,7 +83,7 @@ def registrar_nota(request):
 def ver_notas(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     notas = Nota.objects.filter(aluno=aluno)
-    return render(request, 'ver_notas.html', {'aluno': aluno, 'notas': notas})
+    return render(request, 'pages/ver_notas.html', {'aluno': aluno, 'notas': notas})
 
 
 def calcular_media(notas):
@@ -147,7 +148,7 @@ def adicionar_documento(request, aluno_id):
 
 def consultar_frequencia(request):
     frequencias = Frequencia.objects.all()
-    return render(request, 'consultar_frequencia.html', {'frequencias': frequencias})
+    return render(request, 'pages/consultar_frequencia.html', {'frequencias': frequencias})
 
 def media_turma(request):
     # Calcula a média da turma
