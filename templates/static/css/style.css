@@ -590,11 +590,10 @@ form{
 
 .resgistrarNota{
     width: 800px;
-    height: 100%;
+    height: 300px;
     background-color: green;
     color: white;
-    width: 100%;
-    height: 100%;
+   
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -603,13 +602,39 @@ form{
     margin-top: 20%;
 }
 
+.titleRegistro{
+    background-color: green;
+    width: 100%;
+}
 .resgistrarNota h1{
    background-color: green; 
    margin-top: 2%;
 }
 
-.inputNotas{
+ .resgistrarNota form{
     background-color: green;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.inputNotas input{
+    margin-bottom: 5%;
+    width: 250px;
+    height: 20px;
+    border-radius: 8px;
+    color: white;
+
+}
+
+.inputNotas button{
+    background-color: #006400;
+    width: 100px;
+    height: 30px;
+    border: none;
+    border-radius: 8px;
 }
 
 .add-btn{

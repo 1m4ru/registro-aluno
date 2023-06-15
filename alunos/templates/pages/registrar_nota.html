@@ -12,7 +12,9 @@
 </head>
 <body>
     <div class="resgistrarNota">
-        <h1>Registro de Notas</h1>
+        <div class="titleRegistro">
+            <h1>Registro de Notas</h1>
+        </div>
          <div class="inputNotas">
             <form action="{% url 'registrar_notas' %}" method="POST">
                 {% csrf_token %}
