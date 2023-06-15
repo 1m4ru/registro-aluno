@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Aluno, Nota, Documento, Frequencia, RegistroAlteracao
 from .forms import AlunoForm, NotaForm
-from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 
@@ -22,11 +21,11 @@ def adicionar(request):
             aluno = form.save(commit=False)
             aluno.matricula = gerar_matricula()  # Geração automática da matrícula
             aluno.save()
-            return redirect('home')
+            return redirect('index')
     else:
         form = AlunoForm()
     
-    return render(request, 'pages/base.html', {'form': form})
+    return render(request, 'pages/adicionar_aluno.html', {'form': form})
 
 def gerar_matricula():
     # Recupera o último aluno cadastrado
@@ -34,7 +33,7 @@ def gerar_matricula():
 
     if ultimo_aluno:
         # Se existir um aluno cadastrado, gera uma nova matrícula sequencial
-        nova_matricula = ultimo_aluno.matricula + 1
+        nova_matricula = int(ultimo_aluno.matricula) + 1
     else:
         # Se não existir nenhum aluno cadastrado, define a matrícula inicial como 1
         nova_matricula = 1
@@ -46,7 +45,7 @@ def detalhes_aluno(request, aluno_id):
     return render(request, 'pages/detalhes_aluno.html', {'aluno': aluno})
 
 def editar(request, aluno_id):
-    aluno = Aluno.objects.get(id=aluno_id)
+    aluno = get_object_or_404(Aluno, id=aluno_id)
 
     if request.method == 'POST':
         aluno.nome = request.POST.get('nome')
@@ -84,7 +83,6 @@ def ver_notas(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     notas = Nota.objects.filter(aluno=aluno)
     return render(request, 'pages/ver_notas.html', {'aluno': aluno, 'notas': notas})
-
 
 def calcular_media(notas):
     total_notas = len(notas)
