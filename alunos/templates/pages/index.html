@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +29,6 @@
       <a href="">Disciplina</a>
     </div>
   </div>
-  <!-- {% extends 'base.html' %} -->
 <!-- {% block content %} -->
 <div class="navbar">
   <h1>Lista de Alunos</h1>
@@ -40,7 +41,7 @@
 
   <div class="buttons">
     <button>Pesquisar</button>
-    <a href="" class="buttons">Adicionar</a>
+    <a href="{% url 'adicionar' %}" class="buttons">Adicionar</a>
     <a href="" class="buttons">Editar</a>
   </div>
 </div>

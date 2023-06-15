@@ -6,14 +6,14 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 
 @login_required
+def index(request):
+    alunos = Aluno.objects.all()
+    return render(request, 'pages/index.html', {'alunos': alunos})
+
 def info(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     context = {'aluno': aluno}
-    return render(request, 'templates/pages/info.html', context)
-
-def index(request):
-    alunos = Aluno.objects.all()
-    return render(request, 'index.html', {'alunos': alunos})
+    return render(request, 'pages/info.html', context)
 
 def adicionar(request):
     if request.method == 'POST':
@@ -26,7 +26,7 @@ def adicionar(request):
     else:
         form = AlunoForm()
     
-    return render(request, 'cadastro_aluno.html', {'form': form})
+    return render(request, 'pages/base.html', {'form': form})
 
 def gerar_matricula():
     # Recupera o último aluno cadastrado
@@ -43,7 +43,7 @@ def gerar_matricula():
 
 def detalhes_aluno(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    return render(request, 'detalhes_aluno.html', {'aluno': aluno})
+    return render(request, 'pages/detalhes_aluno.html', {'aluno': aluno})
 
 def editar(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
