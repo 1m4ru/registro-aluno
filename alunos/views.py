@@ -4,17 +4,20 @@ from .forms import AlunoForm, NotaForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Avg
 
+
 @login_required
 def index(request):
     alunos = Aluno.objects.all()
     return render(request, 'pages/index.html', {'alunos': alunos})
+
 
 def info(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     context = {'aluno': aluno}
     return render(request, 'pages/info.html', context)
 
-def adicionar(request):
+
+def adicionar_aluno(request):
     if request.method == 'POST':
         form = AlunoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -24,8 +27,9 @@ def adicionar(request):
             return redirect('index')
     else:
         form = AlunoForm()
-    
+
     return render(request, 'pages/adicionar_aluno.html', {'form': form})
+
 
 def gerar_matricula():
     # Recupera o último aluno cadastrado
@@ -40,11 +44,13 @@ def gerar_matricula():
 
     return nova_matricula
 
+
 def detalhes_aluno(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     return render(request, 'pages/detalhes_aluno.html', {'aluno': aluno})
 
-def editar(request, aluno_id):
+
+def editar_aluno(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
 
     if request.method == 'POST':
@@ -65,9 +71,11 @@ def deletar(request, aluno_id):
 
     if request.method == 'POST':
         aluno.delete()
-        return redirect('index')  # Redireciona para a página inicial após a exclusão
+        # Redireciona para a página inicial após a exclusão
+        return redirect('index')
 
     return render(request, 'confirmar_exclusao.html', {'aluno': aluno})
+
 
 def registrar_nota(request):
     if request.method == 'POST':
@@ -79,10 +87,12 @@ def registrar_nota(request):
         form = NotaForm()
     return render(request, 'registrar_nota.html', {'form': form})
 
+
 def ver_notas(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     notas = Nota.objects.filter(aluno=aluno)
     return render(request, 'pages/ver_notas.html', {'aluno': aluno, 'notas': notas})
+
 
 def calcular_media(notas):
     total_notas = len(notas)
@@ -91,24 +101,28 @@ def calcular_media(notas):
         return soma_notas / total_notas
     return 0
 
+
 def ver_media(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     notas = Nota.objects.filter(aluno=aluno)
     total_notas = notas.count()
-    media = sum(nota.valor for nota in notas) / total_notas if total_notas > 0 else 0
+    media = sum(nota.valor for nota in notas) / \
+        total_notas if total_notas > 0 else 0
     return render(request, 'ver_media.html', {'aluno': aluno, 'media': media})
+
 
 def consultar_informacoes(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     notas = Nota.objects.filter(aluno=aluno)
     frequencias = Frequencia.objects.filter(aluno=aluno)
-    
+
     # Outras consultas de informações podem ser adicionadas aqui
-    
+
     return render(request, 'consultar_informacoes.html', {'aluno': aluno, 'notas': notas, 'frequencias': frequencias})
 
+
 def editar_informacoes(request, aluno_id):
-    
+
     aluno = get_object_or_404(Aluno, id=aluno_id)
     if request.method == 'POST':
         # Processar os dados enviados pelo formulário
@@ -121,7 +135,8 @@ def editar_informacoes(request, aluno_id):
         aluno.save()
 
         # Registrar a alteração no histórico
-        registro = RegistroAlteracao(aluno=aluno, campo_alterado='informacoes_pessoais', valor_anterior='Valores anteriores')
+        registro = RegistroAlteracao(
+            aluno=aluno, campo_alterado='informacoes_pessoais', valor_anterior='Valores anteriores')
         registro.save()
 
         return redirect('detalhes_aluno', aluno_id=aluno.id)
@@ -144,14 +159,17 @@ def adicionar_documento(request, aluno_id):
     else:
         return render(request, 'adicionar_documento.html', {'aluno': aluno})
 
+
 def consultar_frequencia(request):
     frequencias = Frequencia.objects.all()
     return render(request, 'pages/consultar_frequencia.html', {'frequencias': frequencias})
+
 
 def media_turma(request):
     # Calcula a média da turma
     media = Aluno.objects.all().aggregate(media_geral=Avg('nota'))
     return render(request, 'relatorios/media_turma.html', {'media': media})
+
 
 def indice_presenca(request):
     # Calcula o índice de presença da turma
