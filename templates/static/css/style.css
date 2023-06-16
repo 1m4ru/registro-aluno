@@ -637,6 +637,41 @@ form{
     border-radius: 8px;
 }
 
+.verNotas{
+    width: 800px;
+    height: 300px;
+    background-color: green;
+    display: flex;
+    align-items: center;
+    color: white;
+    margin-left: 30%;
+    
+}
+
+.buttonMedia{
+    background-color: green;
+   
+ 
+}
+
+.buttonMedia button{
+background-color: #006400;
+width: 100px;
+height: 20px;
+}
+
+
+
+.verNotas h2,
+.verNotas ul,
+.verNotas li,
+.verNotas a{
+    background-color: green;
+    
+
+}
+
+
 .add-btn{
     width: 800px;
     margin: 10px auto;
