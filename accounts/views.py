@@ -16,7 +16,7 @@ def user_login(request):
             return redirect('login')
         else:
             auth.login(request, check_user)
-            return redirect('home')
+            return redirect('index')
 
 
 

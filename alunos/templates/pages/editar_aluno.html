@@ -1,24 +1,49 @@
-<h2>Editar Aluno</h2>
-<form method="POST">
-    {% csrf_token %}
-    <label for="nome">Nome:</label>
-    <input type="text" id="nome" name="nome" value="{{ aluno.nome }}"><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/templates/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
 
-    <label for="data_nascimento">Data de Nascimento:</label>
-    <input type="date" id="data_nascimento" name="data_nascimento" value="{{ aluno.data_nascimento }}"><br>
+    <div class="editarAluno">
+        <div class="titleAluno">
+            <h2>Editar Aluno</h2>
+        </div>
+       <div class="formAluno">
+        <form method="POST">
+            {% csrf_token %}
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" value="{{ aluno.nome }}"><br>
+        
+            <label for="data_nascimento">Data de Nascimento:</label>
+            <input type="date" id="data_nascimento" name="data_nascimento" value="{{ aluno.data_nascimento }}"><br>
+        
+            <label for="endereco">Endereço:</label>
+            <input type="text" id="endereco" name="endereco" value="{{ aluno.endereco }}"><br>
+        
+            <label for="contato_emergencia">Contato de Emergência:</label>
+            <input type="text" id="contato_emergencia" name="contato_emergencia" value="{{ aluno.contato_emergencia }}"><br>
+        
+            <!-- Adicione outros campos de acordo com suas necessidades -->
+        
+        </form>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Salvar</button>
+          </form>
 
-    <label for="endereco">Endereço:</label>
-    <input type="text" id="endereco" name="endereco" value="{{ aluno.endereco }}"><br>
+       </div>
 
-    <label for="contato_emergencia">Contato de Emergência:</label>
-    <input type="text" id="contato_emergencia" name="contato_emergencia" value="{{ aluno.contato_emergencia }}"><br>
+    </div>
+    
+</body>
+</html>
 
-    <!-- Adicione outros campos de acordo com suas necessidades -->
 
-    <button type="submit">Salvar</button>
-</form>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Salvar</button>
-  </form>
+
